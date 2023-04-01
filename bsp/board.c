@@ -16,7 +16,6 @@ void board_init(void)
     buttons_init();
     serial_init(UART_RX, UART_TX);
     audio_init(SPEAKER, MIC, RUN_MIC);
-    timer_init();
 }
 
 /* Initialize LED matrix.
