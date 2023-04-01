@@ -5,6 +5,7 @@ export PATH=$PATH:$ARMGCC/bin
 # Path to BSP library
 BSPDIR=bsp
 BLEDIR=ble
+RTXDIR=rtx
 
 # ARM architecture specific compiler flags
 ARCH="-mcpu=cortex-m4 -mthumb -mabi=aapcs -mfloat-abi=hard -mfpu=fpv4-sp-d16"
@@ -13,7 +14,7 @@ ARCH="-mcpu=cortex-m4 -mthumb -mabi=aapcs -mfloat-abi=hard -mfpu=fpv4-sp-d16"
 OPT="-ffunction-sections -fdata-sections -fno-strict-aliasing -fno-builtin"
 
 # Compiler flags
-CFLAGS="-I$BSPDIR -I$BLEDIR -O3 -g3 -Wall -Werror $ARCH $OPT"
+CFLAGS="-I$BSPDIR -I$BLEDIR -I$RTXDIR -O3 -g3 -Wall -Werror $ARCH $OPT"
 
 # Compile the source files
 echo Compiling main.c
@@ -23,7 +24,7 @@ arm-none-eabi-gcc -c $CFLAGS main.c
 echo Linking MICROBIT.out
 arm-none-eabi-ld -T ble_uart.ld -Map system.map \
         --entry Reset_Handler --gc-sections \
-        main.o $BSPDIR/libbsp.a $BLEDIR/libble_uart.a \
+        main.o $BSPDIR/libbsp.a $BLEDIR/libble_uart.a $RTXDIR/librtx.a \
         $ARMGCC/arm-none-eabi/lib/thumb/v7e-m+fp/hard/libm.a \
         $ARMGCC/arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc.a \
         $ARMGCC/lib/gcc/arm-none-eabi/12.2.1/thumb/v7e-m+fp/hard/libgcc.a \
